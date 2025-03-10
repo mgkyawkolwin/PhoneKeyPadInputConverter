@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        
+        {
+            "name": "C#: ConsoleTestApp",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/ConsoleTestApp/ConsoleTestApp.csproj",
+            "launchConfigurationId": "TargetFramework=;ConsoleTestApp"
+        },
+        {
+            "name": "Unit Test",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Tests/UnitTests.csproj",
+            "launchConfigurationId": "TargetFramework=;UnitTests"
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}
