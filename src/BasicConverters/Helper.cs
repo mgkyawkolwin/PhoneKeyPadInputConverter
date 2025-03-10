@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace BasicConverter;
+namespace BasicConverters;
 
 /// <summary>
 /// Helper class for basic converters.
@@ -8,7 +8,8 @@ namespace BasicConverter;
 public static partial class Helper 
 {
 
-    public static readonly string BackspacePattern = @"\d\*";
+    [GeneratedRegex(@"(\d\*)|( \*)")]
+    public static partial Regex BackspaceRegEx{get;}
 
     public static readonly Dictionary<string,string> ConversionDict = new ()
     {
@@ -19,6 +20,6 @@ public static partial class Helper
         {"999", "Y"},{"9999", "Z"}
     };
 
-    [GeneratedRegex(@"^(?!([7|9])\1{4})(?!([2-68])\2{3})(?!1)[2-9]([ 2-9\*]+)*#$")]
-    public static partial Regex RegEx{get;}
+    [GeneratedRegex(@"^(?!.*[ ]{2})(?!.*([79])\1{4})(?!.*([2-68])\2{3})(?!.*(\d? #))[2-9]{1}[ 2-9\*]*#$")]
+    public static partial Regex InterpretRegEx{get;}
 }

@@ -1,10 +1,12 @@
-﻿using BasicConverter;
+﻿using BasicConverters;
 using InputConverters.Converters.KeyPadConverter;
 
 
 static string OldPhonePad(string input ) 
 {
-    var converter = KeyPadConverterFactory.Create(input);
+    var sanitizer = KeyPadConverterFactory.CreateSanitizer(input);
+    var sanitizedInput = sanitizer.Process();
+    var converter = KeyPadConverterFactory.Create(sanitizedInput);
     return converter.Process();
 }
 

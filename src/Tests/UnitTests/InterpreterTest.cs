@@ -29,26 +29,26 @@ public sealed class InterpreterTest
 
 
     [TestMethod]
-    [DataRow("2", "A")]
-    [DataRow("22", "B")]
-    [DataRow("227*", "B")]
-    [DataRow("222", "C")]
-    [DataRow("3", "D")]
-    [DataRow("33", "E")]
-    [DataRow("333", "F")]
-    [DataRow("222 2 22", "CAB")]
-    [DataRow("4433555 555666", "HELLO")]
-    [DataRow("8 88777444666*664", "TURIOMG")]
-    [DataRow("2 22 222 3 33 333 4 44 444 5 55 555 6 66 666 7 77 777 7777 8 88 888 9 99 999 9999", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
+    [DataRow("2#", "A")]
+    [DataRow("22#", "B")]
+    [DataRow("227*#", "B")]
+    [DataRow("222#", "C")]
+    [DataRow("3#", "D")]
+    [DataRow("33#", "E")]
+    [DataRow("333#", "F")]
+    [DataRow("222 2 22#", "CAB")]
+    [DataRow("4433555 555666#", "HELLO")]
+    [DataRow("8 88777444666*664#", "TURIOMG")]
+    [DataRow("2 22 222 3 33 333 4 44 444 5 55 555 6 66 666 7 77 777 7777 8 88 888 9 99 999 9999#", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
     public void Interpreter_Complete_Rules_Should_Success(string input, string expected)
     { 
         // Rules for backspace \* and # should come first
         // Rules should be added from larger no of characters to fewer characters.
-        var interpreter = new Interpreter((x) => Regex.Replace(x,@"\d\*", "", RegexOptions.IgnoreCase));
-        interpreter.AddNext(new ((x) => x.Replace("#", "")))
-        .AddNext(new ((x) => x.Replace("222", "C")))
-        .AddNext(new ((x) => x.Replace("22", "B")))
-        .AddNext(new ((x) => x.Replace("2", "A")))
+        var interpreter = new Interpreter((x) => Regex.Replace(x,@"(\d\*)|( \*)", "", RegexOptions.IgnoreCase));
+        interpreter.AddNext(new ((x) => x.Replace("#", "")))// End of line rule
+        .AddNext(new ((x) => x.Replace("222", "C"))) //largest characters in a character group
+        .AddNext(new ((x) => x.Replace("22", "B"))) //fewer characters in a character group
+        .AddNext(new ((x) => x.Replace("2", "A"))) //fewest character in a character group
         .AddNext(new ((x) => x.Replace("333", "F")))
         .AddNext(new ((x) => x.Replace("33", "E")))
         .AddNext(new ((x) => x.Replace("3", "D")))
@@ -72,7 +72,7 @@ public sealed class InterpreterTest
         .AddNext(new ((x) => x.Replace("999", "Y")))
         .AddNext(new ((x) => x.Replace("99", "X")))
         .AddNext(new ((x) => x.Replace("9", "W")))
-        .AddNext(new ((x) => x.Replace(" ", "")));// space rule should come last
+        .AddNext(new ((x) => x.Replace(" ", "")));// space rule
 
 
 

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace BasicConverter;
+namespace BasicConverters;
 
 /// <summary>
 /// Basic interpreter class for phone keypad input.
@@ -15,15 +15,20 @@ public static class BasicLoopConverter
     /// <returns>Interpreted string result.</returns>
     public static string OldPhonePadWithLoop(string input)
     {
-
-        // replace backspace and digit before anything
-        input = Regex.Replace(input, Helper.BackspacePattern, "");
+        while(input.Contains('*', StringComparison.OrdinalIgnoreCase))
+        {
+            // replace backspace and digit before anything
+            input = Helper.BackspaceRegEx.Replace(input, "");Console.WriteLine(input);
+        }
         
         if(String.IsNullOrWhiteSpace(input))
             throw new ArgumentNullException(nameof(input), "Input should not be null or empty.");
 
-        if(!Helper.RegEx.IsMatch(input))
+        if(!Helper.InterpretRegEx.IsMatch(input))
             throw new FormatException("Input format is wrong.");
+
+        
+        
 
         var converted = "";
         var block = "";
