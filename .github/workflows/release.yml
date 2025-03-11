@@ -51,15 +51,6 @@ jobs:
       # working-directory: ${{env.GITHUB_WORKSPACE}}
       run: dotnet test --no-build --no-restore --logger trx --results-directory "./TestResults" ${{env.TEST_FILE_PATH}}
 
-    - name: Upload dotnet test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: dotnet-results-unittests
-        path: TestResults
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
-    
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
