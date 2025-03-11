@@ -1,8 +1,10 @@
 name: Upload package
 
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: ["Create Release"]  # Name of the workflow to trigger on
+    types:
+      - completed  # Trigger when the workflow completes
 
 env:
   # Path to the solution file relative to the root of the project.
