@@ -1,10 +1,7 @@
 name: Upload package
 
 on:
-  workflow_run:
-    workflows: ["Create Release"]  # Name of the workflow to trigger on
-    types:
-      - completed  # Trigger when the workflow completes
+  workflow_dispatch: # run manually from GitHub Actions tab
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -31,12 +28,12 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - run: dotnet build --configuration Release 
+      - run: dotnet build --configuration Release --project ./src/InputConverters/InputConverters.csproj
 
       - name: Create the package
         run: |
           # Update the .csproj file with the release tag name
-          dotnet pack --configuration Release /p:PackageVersion=${{ env.RELEASE_TAG_NAME }}
+          dotnet pack --configuration Release /p:PackageVersion=${{ env.RELEASE_TAG_NAME }} ./src/InputConverters/InputConverters.csproj
 
       - name: Publish the package to GPR
         run: |
