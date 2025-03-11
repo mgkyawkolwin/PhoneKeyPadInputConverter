@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>lwin.ko.kyaw.InputConverters</PackageId>
+    <Version>1.1</Version>
+    <Authors>mgkyawkolwin</Authors>
+    <Company>Anonymous</Company>
+    <RepositoryUrl>https://github.com/mgkyawkolwin/PhoneKeyPadInputConverter</RepositoryUrl>
+    <PackageTags>InputConverters</PackageTags>
+    <Description>
+      Input converters which convert keypad phone's input into corresponding text.
+    </Description>
+  </PropertyGroup>
+
 </Project>

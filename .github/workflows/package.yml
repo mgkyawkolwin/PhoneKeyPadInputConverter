@@ -1,0 +1,41 @@
+name: Upload package
+
+on:
+  release:
+    types: [created]
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: ./
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract release tag name
+        id: get_release_tag
+        run: |
+          echo "RELEASE_TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x' # SDK Version to use.
+          source-url: https://nuget.pkg.github.com/mgkyawkolwin/phonekeypadinputconverter/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - run: dotnet build --configuration Release 
+
+      - name: Create the package
+        run: |
+          # Update the .csproj file with the release tag name
+          dotnet pack --configuration Release /p:PackageVersion=${{ env.RELEASE_TAG_NAME }}
+
+      - name: Publish the package to GPR
+        run: |
+          dotnet nuget push "./src/InputConverters/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/mgkyawkolwin/phonekeypadinputconverter/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
