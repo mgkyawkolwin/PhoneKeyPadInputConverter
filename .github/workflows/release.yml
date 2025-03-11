@@ -2,7 +2,11 @@ name: Create Release
 
 on:
     workflow_dispatch: # run manually from GitHub Actions tab
-
+      inputs:
+        tag_name:
+          description: 'Version 1.0'
+          required: true
+          type: string
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -52,9 +56,9 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-        # tag_name: v1.0 # ${{ github.ref }}
-        release_name: Release v1.0 # ${{ github.ref }}
+      with:
+        tag_name: ${{ github.event.inputs.tag_name }}  # Use the manually provided tag name
+        release_name: Release ${{ github.event.inputs.tag_name }}
         draft: false
         prerelease: false
 
