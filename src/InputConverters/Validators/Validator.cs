@@ -1,15 +1,13 @@
-using InputConverters.Iterators;
-
 namespace InputConverters.Validators;
 
 /// <summary>
 /// Validator for the phone keypad input text.
 /// </summary>
-public class Validator : IValidator, IIterator<Validator>
+public class Validator : IValidator
 {
     private readonly Func<Exception> _exception;
     private readonly string _input;
-    private Validator? _next;
+    private IValidator? _next;
     private readonly Func<string, bool> _rule;
 
     public Validator(string input, Func<Exception> exception, Func<string, bool> rule)
@@ -24,7 +22,7 @@ public class Validator : IValidator, IIterator<Validator>
     /// </summary>
     /// <param name="next">Next validator.</param>
     /// <returns>Next validator.</returns>
-    public Validator AddNext(Validator next)
+    public IValidator AddNext(IValidator next)
     {
         return _next = next;
     }
@@ -42,7 +40,7 @@ public class Validator : IValidator, IIterator<Validator>
     /// Get next validator in the chain.
     /// </summary>
     /// <returns>Next validator.</returns>
-    public Validator Next() 
+    public IValidator Next() 
     {
         return _next;
     }

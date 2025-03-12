@@ -1,5 +1,3 @@
-
-
 namespace InputConverters.Iterators;
 
 /// <summary>

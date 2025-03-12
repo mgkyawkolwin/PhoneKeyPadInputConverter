@@ -1,13 +1,11 @@
-using InputConverters.Iterators;
-
 namespace InputConverters.Interpreters;
 
 /// <summary>
 /// A class responsible for interpreting phone keypad input value into corresponding characters.
 /// </summary>
-public class Interpreter : IInterpreter, IIterator<Interpreter>
+public class Interpreter : IInterpreter
 {
-    private Interpreter? _next;
+    private IInterpreter? _next;
     private readonly Func<string,string> _rule;
 
     /// <summary>
@@ -24,7 +22,7 @@ public class Interpreter : IInterpreter, IIterator<Interpreter>
     /// </summary>
     /// <param name="next">Next interpreter.</param>
     /// <returns>Next interpreter.</returns>
-    public Interpreter AddNext(Interpreter next)
+    public IInterpreter AddNext(IInterpreter next)
     {
         _next = next;
         return _next;
@@ -54,7 +52,7 @@ public class Interpreter : IInterpreter, IIterator<Interpreter>
     /// Get next interpreter in the chain.
     /// </summary>
     /// <returns>Next interpreter.</returns>
-    public Interpreter Next() 
+    public IInterpreter Next() 
     {
         return _next;
     }
