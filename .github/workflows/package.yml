@@ -33,7 +33,7 @@ jobs:
       - name: Create the package
         run: |
           # Update the .csproj file with the release tag name
-          dotnet pack --configuration Release /p:PackageVersion=${{ env.RELEASE_TAG_NAME }} ./src/InputConverters/InputConverters.csproj
+          dotnet pack --configuration Release ./src/InputConverters/InputConverters.csproj
 
       - name: Publish the package to GPR
         run: |
