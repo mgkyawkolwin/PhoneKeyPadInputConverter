@@ -37,4 +37,5 @@ jobs:
 
       - name: Publish the package to GPR
         run: |
-          dotnet nuget push "./src/InputConverters/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/mgkyawkolwin/PhoneKeypadInputConverter/index.json"
+          dotnet nuget push "./src/InputConverters/bin/Release/*.nupkg" --api-key ${{secrets.GITHUB_TOKEN}} --source "github"
+          #dotnet nuget push "./src/InputConverters/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/mgkyawkolwin/PhoneKeypadInputConverter/index.json"
