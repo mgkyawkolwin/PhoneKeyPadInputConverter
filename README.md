@@ -12,11 +12,16 @@ User inputs 222 2 22# and converter converts it to the word "CAB".
 Source code contains two proejct for different converters, BasicConverters and InputConverters. BasicConverters project contain utility/helper style classes which use normal loop/recursive to convert the input. InputConverters is a class library style project with classes such as factory, interpreter and validator. You can import the project and use directly or you can extend it if you need which is not already available. 
 
 ### How do I get started?
-You can download the entire souce code to build and run yourself from here.
+Option 1: You can download the entire souce code to build and run yourself from here.
 [GitHub Repository Code](https://github.com/mgkyawkolwin/PhoneKeypadInputConverter)
 
-Or you can download the latest release from here.
+Option 2: Or you can download the latest release from here.
 [Latest Releases](https://github.com/mgkyawkolwin/PhoneKeypadInputConverter/releases)
+
+Option 3: You can add nuget package to your project.
+```bash
+dotnet add package InputConverters --version 1.2.0
+```
 
 First, you need to import the project and use this namespace.
 
