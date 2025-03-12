@@ -1,7 +1,7 @@
-name: Upload package
+name: Upload Package
 
 on:
-  workflow_dispatch: # run manually from GitHub Actions tab
+  workflow_dispatch:
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -35,11 +35,18 @@ jobs:
           # Update the .csproj file with the release tag name
           dotnet pack --configuration Release ./src/InputConverters/InputConverters.csproj
 
+      - name: Find the .nupkg file
+        id: find_nupkg
+        run: |
+          # Find the .nupkg file in the Release directory
+          NUPKG_FILE=$(ls ./src/InputConverters/bin/Release/*.nupkg)
+          echo "NUPKG_FILE=${NUPKG_FILE}" >> $GITHUB_ENV
+
       - name: Nuget Add Source
         run: |
           dotnet nuget add source --username mgkyawkolwin --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mgkyawkolwin/index.json"
 
       - name: Publish the package to GPR
         run: |
-          dotnet nuget push "./src/InputConverters/bin/Release/InputConverters.1.2.0.nupkg" --api-key ${{secrets.GITHUB_TOKEN}} --source "github"
+          dotnet nuget push "./src/InputConverters/bin/Release/"${{ env.NUPKG_FILE }} --api-key ${{secrets.GITHUB_TOKEN}} --source "github"
           # dotnet nuget push "./src/InputConverters/bin/Release/*.nupkg" --source "https://nuget.pkg.github.com/mgkyawkolwin/PhoneKeypadInputConverter/index.json"

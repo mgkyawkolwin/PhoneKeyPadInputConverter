@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>InputConverters</PackageId>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Authors>mgkyawkolwin</Authors>
     <Company>Anonymous</Company>
     <RepositoryUrl>https://github.com/mgkyawkolwin/PhoneKeyPadInputConverter</RepositoryUrl>
