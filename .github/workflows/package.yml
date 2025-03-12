@@ -28,7 +28,7 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - run: dotnet build --configuration Release --project ./src/InputConverters/InputConverters.csproj
+      - run: dotnet build --configuration Release ./src/InputConverters/InputConverters.csproj
 
       - name: Create the package
         run: |
